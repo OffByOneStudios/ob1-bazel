@@ -40,7 +40,7 @@ def ob1_deps():
     if "glm" not in native.existing_rules():
         new_git_repository(
             name = "glm",
-            build_file  = "//vendor:glm.BUILD.bazel",
+            build_file  = "@ninja_ob1_bazel//:libs/glm.BUILD.bazel",
             commit = "ace16e47780dcef815294715237f51e9129b6eb3",  #v0.9.9.8
             remote = "https://github.com/g-truc/glm",
             shallow_since = "1615197695 +0100",
