@@ -1,3 +1,7 @@
+# ob1-bazel
+Bazel rules maintained by OffByOne Studios
+
+[![TestLinux](https://github.com/OffByOneStudios/ob1-bazel/actions/workflows/test_linux.yml/badge.svg)](https://github.com/OffByOneStudios/ob1-bazel/actions/workflows/test_linux.yml)
 
 
 ## Testing in Docker
