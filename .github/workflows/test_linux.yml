@@ -19,6 +19,9 @@
         
         - name: Install Skia Deps
           run: sudo tools/skia_deps_linux.sh
+          
+        - name: Install Xorge Deps
+          run: sudo apt install -y xorg-dev
 
         - name: Run Tests
-          run: bazel test ...
+          run: bazel test --test_output=all ...
