@@ -65,9 +65,9 @@ def ob1_deps():
     if "skia" not in native.existing_rules():
         http_archive(
             name = "skia",
-            urls = ["https://github.com/mason-bially/skia-dist/archive/500838b97713b3c1c50d0e9e86d39878e48b0fb3.zip"],
-            strip_prefix = "skia-dist-500838b97713b3c1c50d0e9e86d39878e48b0fb3",
-            sha256 = "cd1c4e6db93423f07395bc9228e4729a8fc610b887db2aa5c2bf9412533aa6f7",
+            urls = ["https://github.com/OffByOneStudios/bazel-skia/releases/download/v0.1.0/skia.zip"],
+            strip_prefix = "skia",
+            sha256 = "3b8b284238d931eaf78da263600367c699216060d85d9d05042e3845b5082ab4",
         )
     
     if "com_github_zaucy_rules_7zip" not in native.existing_rules():

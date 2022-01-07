@@ -4,9 +4,13 @@ cc_test(
     name = "skia_test",
     srcs = ["src/skia/test.cc"],
     deps = [
-        "@skia//:skia"
+        "@skia//:skia",
+        "@glfw//:glfw"
     ],
-    linkopts = ["-lpthread", "-ldl"], 
+    linkopts = select({
+        "@bazel_tools//src/conditions:windows": ["User32.lib"],
+        "//conditions:default": ["-lpthread", "-ldl"],
+    }),
     linkstatic = 1,
     copts = select({
         "@bazel_tools//src/conditions:windows": ["/std:c++17"],
