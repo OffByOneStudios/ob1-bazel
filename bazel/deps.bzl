@@ -69,6 +69,15 @@ def ob1_deps():
             strip_prefix = "skia",
             sha256 = "3b8b284238d931eaf78da263600367c699216060d85d9d05042e3845b5082ab4",
         )
+
+    if "sqlite" not in native.existing_rules():
+        http_archive(
+            name = "sqlite3",
+            urls= ["https://www.sqlite.org/2022/sqlite-amalgamation-3370200.zip"],
+            strip_prefix="sqlite-amalgamation-3370200",
+            build_file  = "@ninja_ob1_bazel//:libs/sqlite3.BUILD.bazel",
+            sha256 = "cb25df0fb90b77be6660f6ace641bbea88f3d0441110d394ce418f35f7561bb0",
+        )
     
     if "com_github_zaucy_rules_7zip" not in native.existing_rules():
         git_repository(

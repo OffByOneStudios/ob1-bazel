@@ -17,3 +17,21 @@ cc_test(
         "//conditions:default": ["-std=c++17"],
     }),
 )
+
+cc_test(
+    name = "sqlite3_test",
+    srcs = ["src/sqlite/test.cc"],
+    deps = [
+        "@sqlite3//:libsqlite3",
+        #"@spdlog//:spdlog"
+    ],
+    linkopts = select({
+        "@bazel_tools//src/conditions:windows": ["User32.lib"],
+        "//conditions:default": ["-lpthread", "-ldl"],
+    }),
+    linkstatic = 1,
+    copts = select({
+        "@bazel_tools//src/conditions:windows": ["/std:c++17"],
+        "//conditions:default": ["-std=c++17"],
+    }),
+)

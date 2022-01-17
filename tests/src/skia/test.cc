@@ -62,6 +62,7 @@ int main(int argc, char** argv)
             return -1;
         }
 
+        SkDebugf("Sucesffully Created GPU backed Surface \n");
         return 0;
     }
     else

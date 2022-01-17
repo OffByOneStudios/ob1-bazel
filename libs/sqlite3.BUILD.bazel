@@ -1,0 +1,16 @@
+
+cc_library(
+    name = "libsqlite3",
+    hdrs = ["sqlite3.h", "sqlite3ext.h"],
+    srcs = ["sqlite3.c"],
+    visibility = ["//visibility:public"],
+)
+
+cc_binary(
+    name="sqlite3",
+    deps= [
+        "libsqlite3"
+    ],
+    srcs=["shell.c"]
+
+)
