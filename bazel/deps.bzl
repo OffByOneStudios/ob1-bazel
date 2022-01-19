@@ -46,6 +46,15 @@ def ob1_deps():
             shallow_since = "1615197695 +0100",
         )
 
+    if "graphqlparser" not in native.existing_rules():
+        http_archive(
+            name = "graphqlparser",
+            urls = ["https://github.com/graphql/libgraphqlparser/archive/refs/tags/v0.7.0.zip"],
+            strip_prefix = "libgraphqlparser-0.7.0",
+            build_file  = "@ninja_ob1_bazel//:libs/graphqlparser.BUILD.bazel",
+            sha256 = "1fa4a7df16bdf407de35f47dc69bd73ed39cd302e55ea620bde7b228a9fd7250",
+        )
+
     if "glfw" not in native.existing_rules():
         http_archive(
             name = "glfw",
