@@ -1,58 +1,137 @@
 
-filegroup(
-    name = "pyfiles",
-    srcs = glob([
-        "ast/*.py"
-    ]),
+genrule(
+    name = "ast_ast",
+    srcs = ["ast/ast.ast"],
+    outs = ["bst/ast.ast"],
+    cmd = "cp $< $@"
 )
 
-genrule (
-    name = "two2three",
-    srcs = [":pyfiles"],
-    outs = ["ast/ast3.py"],
-    cmd = "for i in $(locations :pyfiles); do touch $@ && echo $$i && python -mlib2to3 -w $$i; done" 
+genrule(
+    name = "ast_py",
+    srcs = ["ast/ast.py"],
+    outs = ["bst/ast.py"],
+    cmd = "python -mlib2to3 --no-diffs -W -n --add-suffix=3 $< && mv \"$<\"3 $@"
 )
+
+genrule(
+    name = "casing_py",
+    srcs = ["ast/casing.py"],
+    outs = ["bst/casing.py"],
+    cmd = "python -mlib2to3 --no-diffs -W -n --add-suffix=3 $< && mv \"$<\"3 $@"
+)
+
+genrule(
+    name = "cxx_py",
+    srcs = ["ast/cxx.py"],
+    outs = ["bst/cxx.py"],
+    cmd = "python -mlib2to3 --no-diffs -W -n --add-suffix=3 $< && mv \"$<\"3 $@"
+)
+
+genrule(
+    name = "cxx_visitor_py",
+    srcs = ["ast/cxx_visitor.py"],
+    outs = ["bst/cxx_visitor.py"],
+    cmd = "python -mlib2to3 --no-diffs -W -n --add-suffix=3 $< && mv \"$<\"3 $@"
+)
+
+genrule(
+    name = "cxx_impl_py",
+    srcs = ["ast/cxx_impl.py"],
+    outs = ["bst/cxx_impl.py"],
+    cmd = "python -mlib2to3 --no-diffs -W -n --add-suffix=3 $< && mv \"$<\"3 $@"
+)
+
+genrule(
+    name = "cxx_json_visitor_header",
+    srcs = ["ast/cxx_json_visitor_header.py"],
+    outs = ["bst/cxx_json_visitor_header.py"],
+    cmd = "python -mlib2to3 --no-diffs -W -n --add-suffix=3 $< && mv \"$<\"3 $@"
+)
+
+genrule(
+    name = "cxx_json_visitor_impl",
+    srcs = ["ast/cxx_json_visitor_impl.py"],
+    outs = ["bst/cxx_json_visitor_impl.py"],
+    cmd = "python -mlib2to3 --no-diffs -W -n --add-suffix=3 $< && mv \"$<\"3 $@"
+)
+
+genrule(
+    name = "license_py",
+    srcs = ["ast/license.py"],
+    outs = ["bst/license.py"],
+    cmd = "python -mlib2to3 --no-diffs -W -n --add-suffix=3 $< && mv \"$<\"3 $@"
+)
+
+filegroup(
+    name = "two2three",
+    srcs = [
+        ":ast_ast",
+        ":ast_py",
+        ":cxx_py",
+        ":cxx_visitor_py",
+        ":cxx_impl_py",
+        ":cxx_json_visitor_header",
+        ":cxx_json_visitor_impl",
+        ":casing_py",
+        ":license_py"
+    ]
+)
+
 
 
 genrule(
   name = "ast_h",
-  srcs = ["ast/ast3.py", "ast/ast.py", "ast/ast.ast"],
+  srcs = [":two2three", "bst/ast.py", "bst/ast.ast"],
   outs = ["Ast.h"],
 
-  cmd = "python $(location ast/ast.py) cxx $(location ast/ast.ast) > $@"
+  cmd = "python $(location bst/ast.py) cxx $(location bst/ast.ast) > $@"
 )
 
 genrule(
   name = "ast_visitor_h",
-  srcs = ["ast/ast3.py", "ast/ast.py", "ast/ast.ast"],
+  srcs = [":two2three", "bst/ast.py", "bst/ast.ast"],
   outs = ["AstVisitor.h"],
 
-  cmd = "python $(location ast/ast.py) cxx_visitor $(location ast/ast.ast) > $@"
+  cmd = "python $(location bst/ast.py) cxx_visitor $(location bst/ast.ast) > $@"
 )
 
 genrule(
   name = "ast_cpp",
-  srcs = ["ast/ast3.py", "ast/ast.py", "ast/ast.ast"],
+  srcs = [":two2three", "bst/ast.py", "bst/ast.ast"],
   outs = ["Ast.cpp"],
 
-  cmd = "python $(location ast/ast.py) cxx_impl $(location ast/ast.ast) > $@"
+  cmd = "python $(location bst/ast.py) cxx_impl $(location bst/ast.ast) > $@"
 )
 
 genrule(
   name = "json_visitor_h_inc",
-  srcs = ["ast/ast3.py", "ast/ast.py", "ast/ast.ast"],
+  srcs = [":two2three", "bst/ast.py", "bst/ast.ast"],
   outs = ["JsonVisitor.h.inc"],
 
-  cmd = "python $(location ast/ast.py) cxx_json_visitor_header $(location ast/ast.ast) > $@"
+  cmd = "python $(location bst/ast.py) cxx_json_visitor_header $(location bst/ast.ast) > $@"
 )
 
 genrule(
-  name = "cxx_json_visitor_impl",
-  srcs = ["ast/ast3.py", "ast/ast.py", "ast/ast.ast"],
+  name = "cxx_json_visitor_cpp_impl",
+  srcs = [":two2three", "bst/ast.py", "bst/ast.ast"],
   outs = ["JsonVisitor.cpp.inc"],
 
-  cmd = "python $(location ast/ast.py) cxx_json_visitor_impl $(location ast/ast.ast) > $@"
+  cmd = "python $(location bst/ast.py) cxx_json_visitor_impl $(location bst/ast.ast) > $@"
 )
+
+filegroup(
+    name = "gencpp",
+    srcs = [
+        ":two2three",
+        ":ast_h",
+        ":ast_visitor_h",
+        ":ast_cpp",
+        ":cxx_visitor_py",
+        ":json_visitor_h_inc",
+        ":cxx_json_visitor_cpp_impl",
+    ]
+)
+
 
 
 
@@ -61,12 +140,7 @@ cc_library(
     hdrs = glob([
         "parsergen/*.h*",
     ]) + [
-        ":two2three",
-        ":ast_h",
-        ":ast_visitor_h",
-        ":ast_cpp",
-        ":json_visitor_h_inc",
-        ":cxx_json_visitor_impl",
+        ":gencpp",
 
         
         "parser.tab.hpp",
