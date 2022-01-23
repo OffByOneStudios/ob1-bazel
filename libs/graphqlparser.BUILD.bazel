@@ -139,23 +139,25 @@ cc_library(
     name = "libgraphql",
     hdrs = glob([
         "parsergen/*.h*",
+        "*.h*",
     ]) + [
         ":gencpp",
-
+        #"ASTNode.h",
         
-        "parser.tab.hpp",
-        "JSONVisitor.h",
-        "GraphQLParser.h",
-        "lexer.h",
-        "location.hh",
-        "position.hh",
-        "ASTNode.h",
-        "stack.hh",
-        "syntaxdefs.h",
+        #"parser.tab.hpp",
+        #"JSONVisitor.h",
+        #"GraphQLParser.h",
+        #"lexer.h",
+        #"location.hh",
+        #"position.hh",
+        
+        #"stack.hh",
+        #"syntaxdefs.h",
     ],
-    defines = [
-        "YY_NO_UNISTD_H"
-    ],
+    defines = select({
+        "@bazel_tools//src/conditions:windows": ["YY_NO_UNISTD_H"],
+        "//conditions:default": [],
+    }),
     includes = ["parsergen"],
     srcs = glob([
         "parsergen/*.c*",
