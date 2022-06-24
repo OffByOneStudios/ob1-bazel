@@ -99,8 +99,8 @@ def ob1_deps():
     if "com_github_zaucy_rules_vulkan" not in native.existing_rules():
         git_repository(
             name = "com_github_zaucy_rules_vulkan",
-            commit = "84dea48b70b36cd20b631eeb96503766be37c258",
+            commit = "acddbad61190b7faf81c5ee27e23d259d3c6a1ed",
             remote = "https://github.com/mason-bially/rules_vulkan",
-            shallow_since = "1625508886 -0700",
+            shallow_since = "1656102899 -0700"
         )
         
