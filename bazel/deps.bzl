@@ -66,9 +66,8 @@ def ob1_deps():
     if "sdl2" not in native.existing_rules():
         git_repository(
             name = "sdl2",
-            commit = "e7107899bbcffd513c08ef3e3a02a7cd5ca3d04d",  # v??
+            commit = "1e5f94490568dde3ef12fd4e884c264486f26260",  # v??
             remote = "https://github.com/mason-bially/sdl2",
-            shallow_since = "1609533063 -0800",
         )
 
     if "skia" not in native.existing_rules():
